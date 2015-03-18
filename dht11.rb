@@ -6,8 +6,8 @@ set :environment, :production
 set :port, 1234
 
 
-  get '/' do
-
+  get '/:temperature' do
+    @temperature = params[:temperature]
 
     erb :index
   end
