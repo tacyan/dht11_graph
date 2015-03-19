@@ -21,6 +21,12 @@ set :port, 1234
     redis.get("temperature") 
   end
 
+  get '/rial' do
+    
+
+    erb :dynamic
+  end
+
   get '/temperature' do
     redis = Redis.new host:"127.0.0.1", port:"6379"
     @temperature = redis.get("temperature") 
