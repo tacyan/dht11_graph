@@ -6,10 +6,21 @@ set :environment, :production
 set :port, 1234
 
 
-  get '/:temperature' do
-    @temperature = params[:temperature]
+  get '/' do
 
     erb :index
+  end
+
+  get '/:temperature' do
+    @temperature = "[#{params[:temperature]}]"
+    
+    erb :index
+  end
+
+  post '/', provides: :json do
+    @temp = JSON.parse request.body.read
+    @temperature = @temp.values
+    
   end
 
   post '/temperature/*/humidity/*' do
