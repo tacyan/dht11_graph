@@ -10,7 +10,7 @@
 <div class="chart" id="chart2">
     <canvas id="myChart2" width="200" height="200"></canvas>
     <div class="count">
-        <em>62</em>
+        <em id=num1></em>
         <span class="caption">%</span>
     </div>
 </div>
@@ -23,19 +23,24 @@ function loop(){
  jQuery.get("http://210.152.137.224:1234/num", function(content) {
 
     // 読み込んだデータを","で区切って配列にする
-    var content = Number(content);
+    content = content.split(",");
+    // それぞれの要素を数値に変換する
+    var temperature = content[0];
+    var humidity = content[1];
 
-document.getElementById("num").innerHTML = content;
+
+document.getElementById("num").innerHTML = temperature;
+document.getElementById("num1").innerHTML = humidity;
 // ===================================
 // Chart1
 // ===================================
 var data = [
   {
-    value: content,
+    value: temperature,
     color:"#fff"
   },
   {
-    value : 100-content,
+    value : 100-temperature,
         // Draw with background color
     color : "#66ccff" 
   }
@@ -55,20 +60,16 @@ new Chart(ctx).Doughnut(data,{
 });
 
 
-    } );
-}
-
-loop();
 // ===================================
 // Chart2
 // ===================================
 var data = [
   {
-    value: 62,
+    value: humidity,
     color:"#fff"
   },
   {
-    value : 100-62,
+    value : 100-humidity,
     color : "#66ccff"
   }
 ];
@@ -86,6 +87,10 @@ new Chart(ctx).Doughnut(data,{
   onAnimationComplete : null
 });
 
+    } );
+}
+
+loop();
 
 </script>
 

@@ -30,7 +30,7 @@ set :port, 1234
 
   get '/num' do
 
-    "60"
+    "60,70"
   end
 
 
