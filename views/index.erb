@@ -226,7 +226,7 @@ $(function () {
                     var point = chart.series[0].points[0],
                         newVal,
 
-                    newVal = <%= @temperature %>
+                    newVal = loop();
 
                     point.update(newVal);
 
@@ -241,18 +241,20 @@ $(function () {
 
 <script>
 
-
 function loop(){
 
-  $(function() {
-  $.ajax({
-    url:'http://210.152.137.224:1234/temperature',
-    success: function(data){
-      $("#read_text").text(data);
-    }
-  });
-});
+ jQuery.get("http://210.152.137.224:1234/temperature", function(content) {
 
+    // 読み込んだデータを","で区切って配列にする
+    content = content.split(",");
+    // それぞれの要素を数値に変換する
+    for(i=0; i<content.length; i++){
+      content[i] = Number(content[i]);
+    }
+    // グラフオプションに追加
+    return(content);
+
+    } );
 }
 
 setInterval(loop,1000);

@@ -9,8 +9,8 @@ set :port, 1234
 
   get '/' do
 
-    redis = Redis.new host:"127.0.0.1", port:"6379"
-    @temperature = redis.get("temperature") 
+    #redis = Redis.new host:"127.0.0.1", port:"6379"
+    #@temperature = redis.get("temperature") 
     erb :index
   end
 

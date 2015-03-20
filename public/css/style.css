@@ -1,0 +1,49 @@
+body {
+    background: #66ccff;
+    padding-top: 20px;
+}
+.chart {
+    position: relative;
+    float: left; 
+    margin-right: 20px;
+}
+.chart .count {
+    position: absolute;
+    border-radius: 50%;
+    top: 24px;
+    left: 24px;
+    height: 152px;
+    width: 152px;
+}
+
+.chart em, 
+.chart span {
+    font-family: Arial;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+.chart em {
+    display: block;
+    font-size: 50px;
+    font-style: normal;
+    color: #fff;
+    line-height: 150px;
+}
+.chart .caption {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    color: #fff;
+}
+#chart2 .count {
+    background: url(http://startapp.jp/img/refs/jsfiddle_medium_6628140291.jpg) -20px -20px no-repeat;
+
+}
+#chart2 .count em {
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+}
+/*  ============================
+photo credit: <a href="http://www.flickr.com/photos/jiuck/6628140291/">Jiuck</a> via <a href="http://photopin.com">photopin</a> <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">cc</a>
+*/
