@@ -28,6 +28,12 @@ set :port, 1234
     erb :dynamic
   end
 
+  get '/num' do
+
+    "60"
+  end
+
+
   get '/temperature' do
     redis = Redis.new host:"127.0.0.1", port:"6379"
     temp = redis.lrange "temperature", 0, 50

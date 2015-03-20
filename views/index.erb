@@ -3,7 +3,7 @@
 <div class="chart">
     <canvas id="myChart" width="200" height="200"></canvas>
     <div class="count">
-        <em>79</em>
+        <em id="num"></em>
         <span class="caption">%</span>
     </div>
 </div>
@@ -18,16 +18,24 @@
 
 <script>
 
+function loop(){
+
+ jQuery.get("http://210.152.137.224:1234/num", function(content) {
+
+    // 読み込んだデータを","で区切って配列にする
+    var content = Number(content);
+
+document.getElementById("num").innerHTML = content;
 // ===================================
 // Chart1
 // ===================================
 var data = [
   {
-    value: 79,
+    value: content,
     color:"#fff"
   },
   {
-    value : 21,
+    value : 100-content,
         // Draw with background color
     color : "#66ccff" 
   }
@@ -45,6 +53,12 @@ new Chart(ctx).Doughnut(data,{
   animateScale : false,
   onAnimationComplete : null
 });
+
+
+    } );
+}
+
+loop();
 // ===================================
 // Chart2
 // ===================================
