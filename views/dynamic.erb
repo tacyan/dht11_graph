@@ -1,86 +1,48 @@
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<div id='container'></div>
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
 
+var chart;
 
-<script>
+function draw() {
 
-$(function () {
-    $(document).ready(function () {
-        Highcharts.setOptions({
-            global: {
-                useUTC: false
-            }
-        });
+  // グラフオプションを指定
+  var options = {
+    // 出力先を指定
+    chart :{renderTo : "container"},
+    // タイトルを指定
+    title : {text: "温度グラフ"},
+    // x軸のラベルを指定
+    xAxis : {title: {text: "数"}},
+    // y軸のラベルを指定
+    yAxis : {title: {text: "室温"}}
+  }
 
-        $('#container').highcharts({
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function () {
+  // グラフを作成
+  chart = new Highcharts.Chart(options);
 
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-                        setInterval(function () {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
-                    }
-                }
-            },
-            title: {
-                text: 'Live random data'
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: 'Value'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'Random data',
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
+  // Ajaxを使って data.csv を読み込み、contentに格納
+  jQuery.get("http://210.152.137.224:1234/temperature", function(content) {
 
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
-            }]
-        });
-    });
-});
+    // 読み込んだデータを","で区切って配列にする
+    content = content.split(",");
+    // それぞれの要素を数値に変換する
+    for(i=0; i<content.length; i++){
+      content[i] = Number(content[i]);
+    }
+    // グラフオプションに追加
+    options['series'] = [{name: "temperature", data: content}];
+    // グラフを作成
+    chart = new Highcharts.Chart(options);
+  } );
+}
+
+// ページがロードされた後に、グラフを出力する
+// document.onload = draw();
+
+draw();
+
+setInterval(draw,5000);
 
 </script>
+

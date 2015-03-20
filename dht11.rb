@@ -16,9 +16,10 @@ set :port, 1234
 
   get '/test/:temperature' do
     redis = Redis.new host:"127.0.0.1", port:"6379"
-    redis.set("temperature", "[#{params[:temperature]}]")
-     
-    redis.get("temperature") 
+    count = redis.llen "temperature" 
+    redis.del "temperature" if count > 50 
+    redis.rpush "temperature", "#{params[:temperature]}"
+    
   end
 
   get '/rial' do
@@ -29,15 +30,9 @@ set :port, 1234
 
   get '/temperature' do
     redis = Redis.new host:"127.0.0.1", port:"6379"
-    @temperature = redis.get("temperature") 
-    
+    temp = redis.lrange "temperature", 0, 50
+    temp.join(", ")
   end
-
-  #get '/:temperature' do
-  #  @temperature = "[#{params[:temperature]}]"
-  #  
-  #  erb :index
-  #end
 
   post '/', provides: :json do
     @temp = JSON.parse request.body.read
