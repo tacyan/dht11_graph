@@ -4,7 +4,7 @@
     <canvas id="myChart" width="200" height="200"></canvas>
     <div class="count">
         <em id="num"></em>
-        <span class="caption">%</span>
+        <span class="caption">℃</span>
     </div>
 </div>
 <div class="chart" id="chart2">
@@ -91,6 +91,8 @@ new Chart(ctx).Doughnut(data,{
 }
 
 loop();
+
+setInterval(loop,5000);
 
 </script>
 
