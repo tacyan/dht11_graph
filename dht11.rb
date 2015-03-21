@@ -47,8 +47,8 @@ set :port, 1234
   end
 
   post '/', provides: :json do
-    @temp = JSON.parse request.body.read
-    @temperature = @temp.values
+    p JSON.parse request.body.read
+    #@temperature = @temp.values
     
   end
 
